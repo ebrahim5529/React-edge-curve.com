@@ -1,0 +1,53 @@
+# PHP / Laravel
+/.phpunit.cache
+.phpunit.result.cache
+.phpactor.json
+/vendor
+
+# Environment
+.env
+.env.backup
+.env.production
+.env.*.local
+
+# Build & dependencies
+/bootstrap/ssr
+/node_modules
+
+# Storage & keys
+.*/public/storage
+/public/.user.ini
+/storage/*.key
+/storage/pail
+
+# Wayfinder (generated)
+/resources/js/actions
+/resources/js/routes
+/resources/js/wayfinder
+
+# IDE & OS
+.DS_Store
+Thumbs.db
+/.fleet
+/.idea
+/.nova
+/.vscode
+/.zed
+/.cursor
+
+# Logs & misc
+npm-debug.log*
+yarn-error.log
+yarn-debug.log*
+pnpm-debug.log*
+
+# Auth / config
+/auth.json
+Homestead.json
+Homestead.yaml
+
+# Media & public
+/*.mp4
+/public/videos
+/public/hot
+/public/build
