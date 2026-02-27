@@ -21,6 +21,7 @@ interface Partner {
     id: number;
     name: string;
     image: string | null;
+    image_url: string | null;
     url: string | null;
     order: number;
     is_published: boolean;
@@ -72,11 +73,11 @@ export default function PartnersEdit({ partner }: PartnersEditProps) {
                                         />
                                         <InputError message={errors.name} />
                                     </div>
-                                    {partner.image && (
+                                    {partner.image_url && (
                                         <div className="grid gap-2">
                                             <Label>الصورة الحالية</Label>
                                             <img
-                                                src={`/storage/${partner.image}`}
+                                                src={partner.image_url}
                                                 alt={partner.name}
                                                 className="max-h-40 rounded-md object-contain"
                                             />

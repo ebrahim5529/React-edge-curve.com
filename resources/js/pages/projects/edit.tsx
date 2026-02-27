@@ -24,6 +24,7 @@ interface Project {
     category: string;
     description: string;
     image: string | null;
+    image_url: string | null;
     url: string | null;
     order: number;
     is_published: boolean;
@@ -101,11 +102,11 @@ export default function ProjectsEdit({ project }: ProjectsEditProps) {
                                         />
                                         <InputError message={errors.description} />
                                     </div>
-                                    {project.image && (
+                                    {project.image_url && (
                                         <div className="grid gap-2">
                                             <Label>الصورة الحالية</Label>
                                             <img
-                                                src={`/storage/${project.image}`}
+                                                src={project.image_url}
                                                 alt={project.title}
                                                 className="max-h-40 rounded-md object-cover"
                                             />

@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Partner extends Model
 {
+    protected $appends = [
+        'image_url',
+    ];
+
     protected $fillable = [
         'name',
         'image',
@@ -29,6 +33,6 @@ class Partner extends Model
 
     public function getImageUrlAttribute(): ?string
     {
-        return $this->image ? \Illuminate\Support\Facades\Storage::url($this->image) : null;
+        return $this->image ? route('storage.serve', ['path' => $this->image], false) : null;
     }
 }

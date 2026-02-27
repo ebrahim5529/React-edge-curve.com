@@ -18,17 +18,15 @@ class MediaController extends Controller
      */
     public function index(Project $project): Response
     {
-        $media = DB::table('media')
+        $media = Media::query()
             ->where('project_id', $project->id)
             ->orderBy('order')
             ->orderBy('created_at')
             ->get()
             ->map(function ($item) {
-                // Add computed properties
-                $item->file_url = $item->file_path ? Storage::url($item->file_path) : null;
-                $item->thumbnail_url = $item->thumbnail_path ? Storage::url($item->thumbnail_path) : null;
-                $item->video_url = $item->video_url;
-                $item->video_embed_url = $item->video_embed_url;
+                // Ensure URLs use the storage.serve route via accessors
+                $item->file_url = $item->file_url;
+                $item->thumbnail_url = $item->thumbnail_url;
 
                 return $item;
             });

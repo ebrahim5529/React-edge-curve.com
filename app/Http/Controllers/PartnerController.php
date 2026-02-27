@@ -20,7 +20,11 @@ class PartnerController extends Controller
             ->get();
 
         return Inertia::render('partners/index', [
-            'partners' => $partners,
+            'partners' => $partners->map(function ($partner) {
+                $partner->image_url = $partner->image_url;
+
+                return $partner;
+            }),
         ]);
     }
 

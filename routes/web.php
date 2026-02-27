@@ -7,12 +7,15 @@ use App\Http\Controllers\MediaController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\StorageController;
 use App\Http\Controllers\UserController;
 use App\Models\Partner;
 use App\Models\Project;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
+
+Route::get('/storage-serve/{path}', StorageController::class)->where('path', '.*')->name('storage.serve');
 
 Route::get('/', function () {
     $projects = Project::query()

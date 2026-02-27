@@ -26,6 +26,7 @@ interface Partner {
     id: number;
     name: string;
     image: string | null;
+    image_url: string | null;
     url: string | null;
     order: number;
     is_published: boolean;
@@ -202,9 +203,9 @@ export default function PartnersIndex({ partners }: PartnersIndexProps) {
                                                 className="border-b hover:bg-muted/50"
                                             >
                                                 <td className="py-3 pr-4">
-                                                    {partner.image ? (
+                                                    {partner.image_url ? (
                                                         <img
-                                                            src={`/storage/${partner.image}`}
+                                                            src={partner.image_url}
                                                             alt={partner.name}
                                                             className="size-10 rounded-md object-contain"
                                                         />

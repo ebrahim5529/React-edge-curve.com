@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Storage;
 
 class Media extends Model
 {
+    protected $appends = [
+        'file_url',
+        'thumbnail_url',
+    ];
+
     protected $fillable = [
         'project_id',
         'title',
@@ -36,12 +41,12 @@ class Media extends Model
 
     public function getFileUrlAttribute(): ?string
     {
-        return $this->file_path ? asset('storage/' . $this->file_path) : null;
+        return $this->file_path ? route('storage.serve', ['path' => $this->file_path], false) : null;
     }
 
     public function getThumbnailUrlAttribute(): ?string
     {
-        return $this->thumbnail_path ? asset('storage/' . $this->thumbnail_path) : null;
+        return $this->thumbnail_path ? route('storage.serve', ['path' => $this->thumbnail_path], false) : null;
     }
 
     public function getVideoUrlAttribute(): ?string

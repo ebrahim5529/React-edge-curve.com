@@ -10,6 +10,15 @@ use Illuminate\Support\Str;
 class Project extends Model
 {
     /**
+     * The attributes that should be appended to the model's array form.
+     *
+     * @var list<string>
+     */
+    protected $appends = [
+        'image_url',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
@@ -57,7 +66,7 @@ class Project extends Model
      */
     public function getImageUrlAttribute(): ?string
     {
-        return $this->image ? asset('storage/' . $this->image) : null;
+        return $this->image ? route('storage.serve', ['path' => $this->image], false) : null;
     }
 
     /**

@@ -34,6 +34,7 @@ interface Project {
     category: string;
     description: string;
     image: string | null;
+    image_url: string | null;
     url: string | null;
     order: number;
     is_published: boolean;
@@ -214,9 +215,9 @@ export default function ProjectsIndex({ projects }: ProjectsIndexProps) {
                                                 className="border-b hover:bg-muted/50"
                                             >
                                                 <td className="py-3 pr-4">
-                                                    {p.image ? (
+                                                    {p.image_url ? (
                                                         <img
-                                                            src={`/storage/${p.image}`}
+                                                            src={p.image_url}
                                                             alt={p.title}
                                                             className="size-10 rounded-md object-cover"
                                                         />
