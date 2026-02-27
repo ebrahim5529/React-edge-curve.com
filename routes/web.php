@@ -29,14 +29,14 @@ Route::get('/', function () {
             'slug' => $p->slug,
             'category' => $p->category,
             'description' => $p->description,
-            'image' => $p->image ? '/storage/'.$p->image : null,
+            'image' => $p->image_url,
             'url' => $p->url,
             'media' => $p->media->map(fn ($media) => [
                 'id' => $media->id,
                 'title' => $media->title,
                 'type' => $media->type,
-                'file_path' => $media->file_path ? '/storage/'.$media->file_path : null,
-                'thumbnail_path' => $media->thumbnail_path ? '/storage/'.$media->thumbnail_path : null,
+                'file_path' => $media->file_url,
+                'thumbnail_path' => $media->thumbnail_url,
                 'video_url' => $media->video_url,
                 'video_embed_url' => $media->video_embed_url,
                 'is_featured' => $media->is_featured,
@@ -51,7 +51,7 @@ Route::get('/', function () {
         ->map(fn (Partner $partner) => [
             'id' => $partner->id,
             'name' => $partner->name,
-            'image' => $partner->image ? '/storage/'.$partner->image : null,
+            'image' => $partner->image_url,
             'url' => $partner->url,
         ]);
 

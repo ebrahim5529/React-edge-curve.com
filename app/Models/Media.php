@@ -34,14 +34,14 @@ class Media extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public function getFileUrlAttribute(): string
+    public function getFileUrlAttribute(): ?string
     {
-        return Storage::url($this->file_path);
+        return $this->file_path ? asset('storage/' . $this->file_path) : null;
     }
 
     public function getThumbnailUrlAttribute(): ?string
     {
-        return $this->thumbnail_path ? Storage::url($this->thumbnail_path) : null;
+        return $this->thumbnail_path ? asset('storage/' . $this->thumbnail_path) : null;
     }
 
     public function getVideoUrlAttribute(): ?string

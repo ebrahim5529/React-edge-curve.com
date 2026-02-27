@@ -26,4 +26,9 @@ class Partner extends Model
     {
         return $query->where('is_published', true);
     }
+
+    public function getImageUrlAttribute(): ?string
+    {
+        return $this->image ? \Illuminate\Support\Facades\Storage::url($this->image) : null;
+    }
 }
