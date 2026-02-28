@@ -13,8 +13,8 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
     const { isCurrentUrl } = useCurrentUrl();
 
     return (
-        <SidebarGroup className="px-2 py-0">
-            <SidebarGroupLabel>المنصة</SidebarGroupLabel>
+        <SidebarGroup className="px-2 py-0" dir="rtl">
+            <SidebarGroupLabel className="text-right">المنصة</SidebarGroupLabel>
             <SidebarMenu>
                 {items.map((item) => (
                     <SidebarMenuItem key={item.title}>
@@ -23,7 +23,7 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
                             isActive={isCurrentUrl(item.href)}
                             tooltip={{ children: item.title }}
                         >
-                            <Link href={item.href} prefetch>
+                            <Link href={item.href} prefetch className="flex-row-reverse">
                                 {item.icon && <item.icon />}
                                 <span>{item.title}</span>
                             </Link>

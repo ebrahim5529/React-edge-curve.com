@@ -1,16 +1,19 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StorageController;
 use App\Http\Controllers\UserController;
 use App\Models\Partner;
 use App\Models\Project;
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -58,16 +61,35 @@ Route::get('/', function () {
             'url' => $partner->url,
         ]);
 
+    $recentPosts = Post::query()
+        ->published()
+        ->orderByDesc('published_at')
+        ->take(3)
+        ->get(['id', 'title', 'slug', 'excerpt', 'image', 'published_at'])
+        ->map(fn (Post $post) => [
+            'id' => $post->id,
+            'title' => $post->title,
+            'slug' => $post->slug,
+            'excerpt' => $post->excerpt,
+            'image_url' => $post->image_url,
+            'published_at' => $post->published_at ? $post->published_at->format('M d, Y') : null,
+        ]);
+
     return Inertia::render('welcome', [
         'canRegister' => Features::enabled(Features::registration()),
         'projects' => $projects,
         'partners' => $partners,
+        'recentPosts' => $recentPosts,
     ]);
 })->name('home');
 
 Route::get('/portfolio/{project:slug}', [PortfolioController::class, 'show'])->name('portfolio.show');
 
-Route::post('contact', ContactFormController::class)->name('contact.store');
+// Blog Routes
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
+
+Route::post('/contact', [ContactMessageController::class, 'store'])->name('contact.store');
 
 Route::redirect('register', 'login')->name('register');
 
@@ -85,4 +107,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('contact-messages/{contactMessage}', [ContactMessageController::class, 'show'])->name('contact-messages.show');
     Route::post('contact-messages/{contactMessage}/mark-read', [ContactMessageController::class, 'markAsRead'])->name('contact-messages.mark-read');
     Route::delete('contact-messages/{contactMessage}', [ContactMessageController::class, 'destroy'])->name('contact-messages.destroy');
+
+    // Admin Posts (Blog)
+    Route::prefix('dashboard')->name('dashboard.')->group(function () {
+        Route::resource('posts', PostController::class)->except(['show']);
+    });
 });

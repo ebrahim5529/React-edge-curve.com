@@ -6,6 +6,7 @@ import {
     Settings,
     Users,
     UserCog,
+    FileText,
 } from 'lucide-react';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -55,6 +56,11 @@ const mainNavItems: NavItem[] = [
         icon: Inbox,
     },
     {
+        title: 'المدونة',
+        href: '/dashboard/posts',
+        icon: FileText,
+    },
+    {
         title: 'الإعدادات',
         href: edit(),
         icon: Settings,
@@ -65,7 +71,7 @@ const footerNavItems: NavItem[] = [];
 
 export function AppSidebar() {
     return (
-        <Sidebar side="right" collapsible="icon" variant="inset">
+        <Sidebar side="right" collapsible="icon" variant="inset" dir="rtl">
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
