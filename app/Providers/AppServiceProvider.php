@@ -37,10 +37,16 @@ class AppServiceProvider extends ServiceProvider
         View::composer('app', function ($view): void {
             $isDashboard = Route::current() && Route::is(
                 'dashboard',
+                'dashboard.*',
                 'partners.*',
                 'projects.*',
+                'team-members.*',
                 'users.*',
-                'contact-messages.*'
+                'contact-messages.*',
+                'profile.*',
+                'user-password.*',
+                'appearance.*',
+                'two-factor.*',
             );
 
             $view->with('locale', $isDashboard ? 'ar' : 'en');

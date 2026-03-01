@@ -38,10 +38,16 @@ class HandleInertiaRequests extends Middleware
     {
         $isDashboard = Route::current() && Route::is(
             'dashboard',
+            'dashboard.*',
             'partners.*',
             'projects.*',
+            'team-members.*',
             'users.*',
-            'contact-messages.*'
+            'contact-messages.*',
+            'profile.*',
+            'user-password.*',
+            'appearance.*',
+            'two-factor.*',
         );
 
         return [

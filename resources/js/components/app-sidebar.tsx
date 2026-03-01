@@ -26,6 +26,7 @@ import { dashboard } from '@/routes';
 import { edit } from '@/routes/profile';
 import { index as projectsIndex } from '@/routes/projects';
 import { index as partnersIndex } from '@/routes/partners';
+import { index as teamMembersIndex } from '@/routes/team-members';
 import { index as usersIndex } from '@/routes/users';
 import { index as contactMessagesIndex } from '@/routes/contact-messages';
 
@@ -43,6 +44,11 @@ const mainNavItems: NavItem[] = [
     {
         title: 'الشركاء',
         href: partnersIndex.url(),
+        icon: Users,
+    },
+    {
+        title: 'فريق العمل',
+        href: teamMembersIndex.url(),
         icon: Users,
     },
     {

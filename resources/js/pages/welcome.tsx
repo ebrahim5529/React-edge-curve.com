@@ -5,6 +5,7 @@ import ServicesSection from '@/components/landing/services-section';
 import PortfolioSection from '@/components/landing/portfolio-section';
 import PartnersSection from '@/components/landing/partners-section';
 import AboutSection from '@/components/landing/about-section';
+import TeamSection from '@/components/landing/team-section';
 import BlogSection from '@/components/landing/blog-section';
 import ContactSection from '@/components/landing/contact-section';
 import Footer from '@/components/landing/footer';
@@ -40,10 +41,11 @@ interface WelcomeProps {
     canRegister: boolean;
     projects?: Project[];
     partners?: Partner[];
+    teamMembers?: any[];
     recentPosts?: any[];
 }
 
-export default function Welcome({ canRegister, projects = [], partners = [], recentPosts = [] }: WelcomeProps) {
+export default function Welcome({ canRegister, projects = [], partners = [], teamMembers = [], recentPosts = [] }: WelcomeProps) {
     return (
         <>
             <Head title="Edge Curve - Creative Marketing Agency">
@@ -63,6 +65,7 @@ export default function Welcome({ canRegister, projects = [], partners = [], rec
                     <PortfolioSection projects={projects} />
                     <PartnersSection partners={partners} />
                     <AboutSection />
+                    <TeamSection teamMembers={teamMembers} />
                     <BlogSection posts={recentPosts} />
                     <ContactSection />
                 </main>

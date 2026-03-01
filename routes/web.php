@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\BlogController;
-use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MediaController;
@@ -10,10 +9,12 @@ use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\StorageController;
+use App\Http\Controllers\TeamMemberController;
 use App\Http\Controllers\UserController;
 use App\Models\Partner;
-use App\Models\Project;
 use App\Models\Post;
+use App\Models\Project;
+use App\Models\TeamMember;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -75,11 +76,28 @@ Route::get('/', function () {
             'published_at' => $post->published_at ? $post->published_at->format('M d, Y') : null,
         ]);
 
+    $teamMembers = TeamMember::query()
+        ->published()
+        ->orderBy('order')
+        ->orderBy('created_at')
+        ->get(['id', 'name', 'role', 'image', 'facebook_url', 'twitter_url', 'linkedin_url', 'instagram_url'])
+        ->map(fn (TeamMember $member) => [
+            'id' => $member->id,
+            'name' => $member->name,
+            'role' => $member->role,
+            'image_url' => $member->image_url,
+            'facebook_url' => $member->facebook_url,
+            'twitter_url' => $member->twitter_url,
+            'linkedin_url' => $member->linkedin_url,
+            'instagram_url' => $member->instagram_url,
+        ]);
+
     return Inertia::render('welcome', [
         'canRegister' => Features::enabled(Features::registration()),
         'projects' => $projects,
         'partners' => $partners,
         'recentPosts' => $recentPosts,
+        'teamMembers' => $teamMembers,
     ]);
 })->name('home');
 
@@ -101,6 +119,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('partners', PartnerController::class)->except(['show']);
     Route::resource('projects', ProjectController::class)->except(['show']);
     Route::resource('projects.media', MediaController::class)->except(['show']);
+    Route::resource('team-members', TeamMemberController::class)->except(['show']);
     Route::resource('users', UserController::class)->except(['show', 'create', 'edit']);
     Route::patch('users/{user}/toggle-active', [UserController::class, 'toggleActive'])->name('users.toggle-active');
     Route::get('contact-messages', [ContactMessageController::class, 'index'])->name('contact-messages.index');
